@@ -441,6 +441,11 @@ public sealed class MainViewModel : ObservableObject
                 await slot.ApplyProjectAsync(document);
             }
 
+            foreach (var slot in new[] { Left, Right }.Where(slot => slot.Source != null && !slot.IsEdited))
+            {
+                await slot.RegenerateTextAsync();
+            }
+
             Status = Localizer.Instance.Format("status.projectLoaded", Path.GetFileName(path));
         }
         catch (Exception exception) when (exception is IOException or InvalidDataException or NotSupportedException or UnauthorizedAccessException or System.Text.Json.JsonException)

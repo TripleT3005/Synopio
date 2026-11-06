@@ -6,6 +6,18 @@ Alle wichtigen Änderungen an Synopio, gegliedert nach Version im Stil von [Keep
 
 ## [Unreleased]
 
+## [0.1.1] – 2026-11-06
+
+### English
+
+#### Fixed
+- When a project file is opened, garbled words in PDFs are repaired with the words of the other document as well, as they are when opening the files individually. Before, words such as `Änderungen` could appear as a change.
+
+### Deutsch
+
+#### Behoben
+- Beim Öffnen einer Projektdatei werden verstümmelte Wörter in PDFs auch anhand der Wörter des anderen Dokuments repariert, so wie beim Öffnen der einzelnen Dateien. Vorher konnten Wörter wie `Änderungen` als Änderung erscheinen.
+
 ## [0.1.0] – 2026-11-06
 
 ### English

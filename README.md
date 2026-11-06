@@ -72,7 +72,7 @@ If the text of a PDF was extracted incorrectly, correct it on the tabs **Text of
 #### Repairing garbled words
 Many fonts draw certain letter pairs such as `fi`, `ft`, `tt` or `ti` as one combined character, a so-called ligature. Some programs store these characters incorrectly when creating a PDF, so the extracted text contains `Situa=on` instead of `Situation` or `Au>rag` instead of `Auftrag`. Synopio recognizes such words, tries the usual letter pairs and keeps the one that results in a word occurring correctly in one of the two documents. It only changes a word if such a match exists.
 
-Selected synopsis rows can be copied with <kbd>Ctrl</kbd>+<kbd>C</kbd>. **About** shows the version and the license and links to the project page. The Word export names Synopio and the version in the footer.
+Selected synopsis rows can be copied with `Ctrl+C`. **About** shows the version and the license and links to the project page. The Word export names Synopio and the version in the footer.
 
 Synopio follows the light or dark mode of Windows and remembers the window size and position; if the screen it was on is no longer connected, it opens centered.
 
@@ -195,7 +195,7 @@ Wurde der Text eines PDFs falsch ausgelesen, lässt er sich auf den Reitern **Te
 #### Verstümmelte Wörter reparieren
 Viele Schriften stellen bestimmte Buchstabenpaare wie `fi`, `ft`, `tt` oder `ti` als ein zusammengezogenes Zeichen dar, eine sogenannte Ligatur. Manche Programme speichern diese Zeichen beim Erzeugen eines PDFs fehlerhaft, sodass im ausgelesenen Text `Situa=on` statt `Situation` oder `Au>rag` statt `Auftrag` steht. Synopio erkennt solche Wörter, probiert die üblichen Buchstabenpaare aus und übernimmt das Paar, mit dem ein Wort entsteht, das in einem der beiden Dokumente korrekt vorkommt. Ein Wort wird nur geändert, wenn es eine solche Übereinstimmung gibt.
 
-Markierte Zeilen der Synopse lassen sich mit <kbd>Strg</kbd>+<kbd>C</kbd> kopieren. **Info** zeigt Version und Lizenz und verlinkt die Projektseite. Der Word-Export nennt Synopio und die Version in der Fußzeile.
+Markierte Zeilen der Synopse lassen sich mit `Strg+C` kopieren. **Info** zeigt Version und Lizenz und verlinkt die Projektseite. Der Word-Export nennt Synopio und die Version in der Fußzeile.
 
 Synopio folgt dem hellen oder dunklen Modus von Windows und merkt sich Fenstergröße und -position; ist der Bildschirm, auf dem es zuletzt lag, nicht mehr angeschlossen, öffnet es mittig.
 

@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<ApplicationIcon>..\assets\icons\icon.ico</ApplicationIcon>
+		<Product>Synopio</Product>
+		<Description>Compare two document versions side by side</Description>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Synopio.Engine\Synopio.Engine.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<RuntimeHostConfigurationOption Include="Switch.System.Windows.Appearance.DisableFluentThemeWindowBackdrop" Value="true" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="..\lang\en.lang" LogicalName="Synopio.lang.en.lang" Link="lang\en.lang" />
+		<None Include="..\lang\*.lang" Exclude="..\lang\en.lang" Link="lang\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+		<Resource Include="..\assets\icons\icon.ico" Link="assets\icons\icon.ico" />
+	</ItemGroup>
+
+</Project>

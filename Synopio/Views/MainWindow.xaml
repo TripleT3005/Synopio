@@ -1,0 +1,228 @@
+<Window x:Class="Synopio.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:Synopio.Controls"
+        xmlns:l="clr-namespace:Synopio.Localization"
+        xmlns:vm="clr-namespace:Synopio.ViewModels"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+        Title="{l:Text app.title}"
+        FlowDirection="{Binding FlowDirection, Source={x:Static l:Localizer.Instance}}"
+        Width="1280" Height="860" MinWidth="900" MinHeight="600"
+        Icon="/assets/icons/icon.ico"
+        Background="{DynamicResource ApplicationBackgroundBrush}"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <Style x:Key="SectionHeading" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+
+        <Style x:Key="PageNumberBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Width" Value="64"/>
+            <Setter Property="Margin" Value="6,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <DataTemplate x:Key="DocumentSlotTemplate" DataType="{x:Type vm:DocumentSlotViewModel}">
+            <StackPanel>
+                <TextBlock Style="{StaticResource SectionHeading}" Text="{Binding Heading}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding FileName}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" ToolTip="{Binding FilePath}"/>
+                    <TextBlock Grid.Column="1" Text="{Binding PageInfo}" Margin="8,0,0,0" VerticalAlignment="Center" Opacity="0.75"/>
+                </Grid>
+                <WrapPanel Margin="0,8,0,0">
+                    <TextBlock Text="{l:Text document.pagesFrom}" VerticalAlignment="Center"/>
+                    <TextBox Style="{StaticResource PageNumberBox}" Text="{Binding FirstPage, TargetNullValue='', UpdateSourceTrigger=LostFocus}" AutomationProperties.Name="{l:Text document.pagesFrom}"/>
+                    <TextBlock Text="{l:Text document.pagesTo}" VerticalAlignment="Center"/>
+                    <TextBox Style="{StaticResource PageNumberBox}" Text="{Binding LastPage, TargetNullValue='', UpdateSourceTrigger=LostFocus}" AutomationProperties.Name="{l:Text document.pagesTo}"/>
+                </WrapPanel>
+                <WrapPanel Margin="0,6,0,0">
+                    <CheckBox Content="{l:Text document.removeHeaders}" IsChecked="{Binding RemoveHeadersAndFooters}" Margin="0,0,16,0"/>
+                    <CheckBox Content="{l:Text document.repairLigatures}" ToolTip="{l:Text document.repairLigatures.hint}" IsChecked="{Binding RepairLigatures}"/>
+                </WrapPanel>
+                <TextBlock Margin="0,6,0,0" Text="{l:Text document.edited}" Foreground="{DynamicResource SystemFillColorCautionBrush}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEdited}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" LastChildFill="False">
+            <Button DockPanel.Dock="Left" Content="{l:Text command.openProject}" Command="{Binding OpenProjectCommand}" Margin="0,0,6,0"/>
+            <Button DockPanel.Dock="Left" Content="{l:Text command.saveProject}" Command="{Binding SaveProjectCommand}" Margin="0,0,18,0"/>
+            <Button DockPanel.Dock="Left" Content="{l:Text command.exportDocx}" Command="{Binding ExportDocxCommand}" Margin="0,0,18,0"/>
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <TextBlock Text="{l:Text settings.language}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" DisplayMemberPath="Name" MinWidth="140"
+                          AutomationProperties.Name="{l:Text settings.language}"/>
+                <Button Content="{l:Text command.about}" Command="{Binding AboutCommand}" Margin="12,0,0,0"/>
+            </StackPanel>
+        </DockPanel>
+
+        <Grid Grid.Row="1" Margin="0,12,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border x:Name="LeftDropArea" Grid.Column="0" Padding="12" CornerRadius="6" BorderThickness="1" AllowDrop="True"
+                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                    Drop="OnLeftDrop" DragOver="OnDragOver">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Right" Margin="12,0,0,0">
+                        <Button Content="{l:Text command.openDocument}" Command="{Binding OpenLeftCommand}" HorizontalAlignment="Stretch"/>
+                        <Button Content="{l:Text command.regenerateText}" Command="{Binding RegenerateLeftCommand}" Margin="0,6,0,0" HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+                    <ContentPresenter Content="{Binding Left}" ContentTemplate="{StaticResource DocumentSlotTemplate}"/>
+                </DockPanel>
+            </Border>
+
+            <Border x:Name="RightDropArea" Grid.Column="2" Padding="12" CornerRadius="6" BorderThickness="1" AllowDrop="True"
+                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                    Drop="OnRightDrop" DragOver="OnDragOver">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Right" Margin="12,0,0,0">
+                        <Button Content="{l:Text command.openDocument}" Command="{Binding OpenRightCommand}" HorizontalAlignment="Stretch"/>
+                        <Button Content="{l:Text command.regenerateText}" Command="{Binding RegenerateRightCommand}" Margin="0,6,0,0" HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+                    <ContentPresenter Content="{Binding Right}" ContentTemplate="{StaticResource DocumentSlotTemplate}"/>
+                </DockPanel>
+            </Border>
+        </Grid>
+
+        <WrapPanel Grid.Row="2" Margin="0,10,0,0">
+            <TextBlock Text="{l:Text options.heading}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,12,0"/>
+            <CheckBox Content="{l:Text options.ignoreCase}" IsChecked="{Binding IgnoreCase}" Margin="0,0,16,0"/>
+            <CheckBox Content="{l:Text options.ignoreHyphens}" IsChecked="{Binding IgnoreHyphens}" Margin="0,0,16,0"/>
+            <CheckBox Content="{l:Text options.ignorePunctuation}" IsChecked="{Binding IgnorePunctuation}" Margin="0,0,16,0"/>
+        </WrapPanel>
+
+        <TabControl Grid.Row="3" Margin="0,10,0,0" SelectedIndex="{Binding SelectedTabIndex}">
+            <TabItem Header="{l:Text tab.synopsis}">
+                <DockPanel Margin="0,8,0,0">
+                    <DockPanel DockPanel.Dock="Top" Margin="0,0,0,8" LastChildFill="False">
+                        <CheckBox DockPanel.Dock="Left" Content="{l:Text synopsis.onlyChanges}" IsChecked="{Binding OnlyChanges}" Margin="0,0,16,0"/>
+                        <Button DockPanel.Dock="Left" Content="{l:Text command.previousChange}" Command="{Binding PreviousChangeCommand}" Margin="0,0,6,0"/>
+                        <Button DockPanel.Dock="Left" Content="{l:Text command.nextChange}" Command="{Binding NextChangeCommand}"/>
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Border Width="14" Height="14" CornerRadius="2" Background="#40E81123" Margin="0,0,6,0"/>
+                            <TextBlock Text="{l:Text legend.deleted}" TextDecorations="Strikethrough" Margin="0,0,16,0"/>
+                            <Border Width="14" Height="14" CornerRadius="2" Background="#402FB36B" Margin="0,0,6,0"/>
+                            <TextBlock Text="{l:Text legend.inserted}" TextDecorations="Underline"/>
+                        </StackPanel>
+                    </DockPanel>
+
+                    <Grid DockPanel.Dock="Top" Margin="0,0,18,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding Left.FileName}" FontWeight="SemiBold" Margin="8,0" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Right.FileName}" FontWeight="SemiBold" Margin="8,0" TextTrimming="CharacterEllipsis"/>
+                    </Grid>
+
+                    <Grid>
+                        <ListBox x:Name="SynopsisList"
+                                 ItemsSource="{Binding RowsView}"
+                                 SelectedItem="{Binding SelectedRow}"
+                                 SelectionChanged="OnSynopsisSelectionChanged"
+                                 HorizontalContentAlignment="Stretch"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 VirtualizingPanel.IsVirtualizing="True"
+                                 VirtualizingPanel.VirtualizationMode="Recycling"
+                                 VirtualizingPanel.ScrollUnit="Pixel"
+                                 AutomationProperties.Name="{l:Text tab.synopsis}">
+                            <ListBox.InputBindings>
+                                <KeyBinding Key="C" Modifiers="Control" Command="ApplicationCommands.Copy"/>
+                            </ListBox.InputBindings>
+                            <ListBox.CommandBindings>
+                                <CommandBinding Command="ApplicationCommands.Copy" Executed="OnCopyRows"/>
+                            </ListBox.CommandBindings>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vm:SynopsisRowViewModel}">
+                                    <Grid Margin="0,4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="12"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="{Binding LeftPage}" FontSize="11" Opacity="0.6"/>
+                                            <TextBlock controls:SegmentText.Segments="{Binding Left}" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                        <Rectangle Grid.Column="1" Width="1" HorizontalAlignment="Center" Fill="{DynamicResource DividerStrokeColorDefaultBrush}"/>
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Text="{Binding RightPage}" FontSize="11" Opacity="0.6"/>
+                                            <TextBlock controls:SegmentText.Segments="{Binding Right}" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                                    <Setter Property="AutomationProperties.Name" Value="{Binding PlainText}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasChanges}" Value="True">
+                                            <Setter Property="BorderBrush" Value="{DynamicResource AccentFillColorDefaultBrush}"/>
+                                            <Setter Property="BorderThickness" Value="3,0,0,0"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                        </ListBox>
+                        <controls:ChangeMarkerBar Items="{Binding RowsView}" Width="5" HorizontalAlignment="Right" Margin="0,2,1,2" IsHitTestVisible="False"/>
+                    </Grid>
+                </DockPanel>
+            </TabItem>
+
+            <TabItem Header="{l:Text tab.leftText}">
+                <DockPanel Margin="0,8,0,0">
+                    <TextBlock DockPanel.Dock="Top" Text="{l:Text text.hint}" TextWrapping="Wrap" Opacity="0.75" Margin="0,0,0,8"/>
+                    <TextBox Text="{Binding Left.Text, UpdateSourceTrigger=PropertyChanged, Delay=600}" AcceptsReturn="True" TextWrapping="Wrap"
+                             VerticalScrollBarVisibility="Auto" FontFamily="Consolas" AutomationProperties.Name="{l:Text tab.leftText}"/>
+                </DockPanel>
+            </TabItem>
+
+            <TabItem Header="{l:Text tab.rightText}">
+                <DockPanel Margin="0,8,0,0">
+                    <TextBlock DockPanel.Dock="Top" Text="{l:Text text.hint}" TextWrapping="Wrap" Opacity="0.75" Margin="0,0,0,8"/>
+                    <TextBox Text="{Binding Right.Text, UpdateSourceTrigger=PropertyChanged, Delay=600}" AcceptsReturn="True" TextWrapping="Wrap"
+                             VerticalScrollBarVisibility="Auto" FontFamily="Consolas" AutomationProperties.Name="{l:Text tab.rightText}"/>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+
+        <DockPanel Grid.Row="4" Margin="0,8,0,0">
+            <TextBlock DockPanel.Dock="Right" Text="{Binding Statistics}" Opacity="0.8"/>
+            <TextBlock Text="{Binding Status}" TextTrimming="CharacterEllipsis"/>
+        </DockPanel>
+    </Grid>
+</Window>

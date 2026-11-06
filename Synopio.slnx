@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="LANGUAGES.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/lang/">
+    <File Path="lang/de.lang" />
+    <File Path="lang/en.lang" />
+  </Folder>
+  <Project Path="Synopio.Engine.Tests/Synopio.Engine.Tests.csproj" />
+  <Project Path="Synopio.Engine/Synopio.Engine.csproj" />
+  <Project Path="Synopio/Synopio.csproj" />
+</Solution>

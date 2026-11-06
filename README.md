@@ -13,6 +13,11 @@ It is made for drafts of laws, ordinances, reports and other long documents, whe
 
 > Feedback and bug reports are welcome as [issues](../../issues). Not affiliated with or endorsed by Microsoft. Windows and Word are trademarks of the Microsoft group of companies.
 
+<p>
+  <img src="assets/screenshot-light.png" alt="Synopio comparing two versions of a library regulation, showing changes only (light mode)" width="49%">
+  <img src="assets/screenshot-dark.png" alt="Synopio comparing two versions of a library regulation, showing changes only (dark mode)" width="49%">
+</p>
+
 ### Features
 - Compares PDF, Word (DOCX), text and Markdown files, also across formats; Markdown is compared as plain text
 - Removes running headers, footers and page numbers and joins hyphenated words, so layout differences are not reported as changes
@@ -114,7 +119,7 @@ The version is set once in [`Directory.Build.props`](Directory.Build.props). A r
 
 `scripts/ThirdPartyLicenses.ps1` collects the licenses of all third-party components into `THIRD-PARTY-LICENSES.txt` for the release packages and fails if a component uses a license that is not on its allow list. License texts that a package does not contain itself are stored in [`licenses`](licenses).
 
-The folder [`testdata`](testdata) contains fictional test documents in all supported formats, which the tests use and which are suitable for trying out Synopio.
+The folder [`testdata`](testdata) contains fictional test documents in all supported formats, which the tests use and which are suitable for trying out Synopio. The screenshots show the two PDF versions from there.
 
 The icons in [`assets/icons`](assets/icons) (ICO and PNG in all common sizes) are generated from `icon.svg` with [`render-icons.mjs`](https://github.com/TripleT3005/TripleT3005/blob/main/scripts/render-icons.mjs), which needs Node.js and Edge or Chrome: `node render-icons.mjs assets/icons`.
 
@@ -135,6 +140,11 @@ Gedacht ist sie für Entwürfe von Gesetzen, Verordnungen, Berichten und andere 
 > **Work in progress:** Synopio steht noch am Anfang der Entwicklung. Funktionen, Dateiformate und Oberfläche können sich noch ändern.
 
 > Rückmeldungen und Fehlerberichte gern als [Issue](../../issues). Keine Verbindung zu Microsoft und nicht von Microsoft unterstützt. Windows und Word sind Marken der Microsoft-Unternehmensgruppe.
+
+<p>
+  <img src="assets/screenshot-light.png" alt="Synopio vergleicht zwei Fassungen einer Büchereisatzung und zeigt nur die Änderungen (heller Modus)" width="49%">
+  <img src="assets/screenshot-dark.png" alt="Synopio vergleicht zwei Fassungen einer Büchereisatzung und zeigt nur die Änderungen (dunkler Modus)" width="49%">
+</p>
 
 ### Funktionen
 - Vergleicht PDF-, Word- (DOCX), Text- und Markdown-Dateien, auch untereinander; Markdown wird als reiner Text verglichen
@@ -237,7 +247,7 @@ Die Version steht einmalig in [`Directory.Build.props`](Directory.Build.props). 
 
 `scripts/ThirdPartyLicenses.ps1` sammelt die Lizenzen aller Fremdkomponenten in `THIRD-PARTY-LICENSES.txt` für die Release-Pakete und schlägt fehl, wenn eine Komponente eine Lizenz nutzt, die nicht auf der erlaubten Liste steht. Lizenztexte, die ein Paket nicht selbst enthält, liegen in [`licenses`](licenses).
 
-Der Ordner [`testdata`](testdata) enthält erfundene Testdokumente in allen unterstützten Formaten, die die Tests nutzen und die sich zum Ausprobieren von Synopio eignen.
+Der Ordner [`testdata`](testdata) enthält erfundene Testdokumente in allen unterstützten Formaten, die die Tests nutzen und die sich zum Ausprobieren von Synopio eignen. Die Screenshots zeigen die beiden PDF-Fassungen von dort.
 
 Die Icons in [`assets/icons`](assets/icons) (ICO und PNG in allen gängigen Größen) werden mit [`render-icons.mjs`](https://github.com/TripleT3005/TripleT3005/blob/main/scripts/render-icons.mjs) aus `icon.svg` erzeugt; das Skript braucht Node.js und Edge oder Chrome: `node render-icons.mjs assets/icons`.
 

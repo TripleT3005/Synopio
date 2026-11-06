@@ -6,6 +6,18 @@ Alle wichtigen Änderungen an Synopio, gegliedert nach Version im Stil von [Keep
 
 ## [Unreleased]
 
+## [0.1.2] – 2026-11-06
+
+### English
+
+#### Fixed
+- The title bar no longer takes on the colors of the desktop background and stays neutral like the rest of the window.
+
+### Deutsch
+
+#### Behoben
+- Die Titelleiste nimmt nicht mehr die Farben des Desktop-Hintergrunds an und bleibt neutral wie der Rest des Fensters.
+
 ## [0.1.1] – 2026-11-06
 
 ### English

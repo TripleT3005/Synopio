@@ -27,6 +27,7 @@ public partial class MainWindow : Window
     protected override void OnSourceInitialized(EventArgs e)
     {
         base.OnSourceInitialized(e);
+        WindowBackdrop.Disable(this);
         _placementService.Restore(this);
     }
 

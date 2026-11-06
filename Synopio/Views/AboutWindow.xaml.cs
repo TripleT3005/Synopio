@@ -1,4 +1,5 @@
 using System.Windows;
+using Synopio.Services;
 using Synopio.ViewModels;
 
 namespace Synopio.Views;
@@ -10,5 +11,12 @@ public partial class AboutWindow : Window
     {
         DataContext = viewModel;
         InitializeComponent();
+    }
+
+    // Window
+    protected override void OnSourceInitialized(EventArgs e)
+    {
+        base.OnSourceInitialized(e);
+        WindowBackdrop.Disable(this);
     }
 }

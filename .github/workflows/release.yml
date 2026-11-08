@@ -26,6 +26,8 @@ jobs:
       exists: ${{ steps.check.outputs.exists }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       - name: Read version
         id: version
@@ -56,6 +58,16 @@ jobs:
             exit 1
           fi
           echo "exists=$exists" >> "$GITHUB_OUTPUT"
+
+      - name: Check dependency updates in changelog
+        if: steps.check.outputs.exists == 'false'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          if ! pwsh -NoProfile -File scripts/DependencyUpdates.ps1 -Check "$VERSION"; then
+            echo "::error::CHANGELOG.md does not mention every Dependabot update since the last release; add them to the section for $VERSION"
+            exit 1
+          fi
 
   build:
     needs: version

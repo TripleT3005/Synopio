@@ -119,6 +119,8 @@ The version is set once in [`Directory.Build.props`](Directory.Build.props). A r
 
 `scripts/ThirdPartyLicenses.ps1` collects the licenses of all third-party components into `THIRD-PARTY-LICENSES.txt` for the release packages and fails if a component uses a license that is not on its allow list. License texts that a package does not contain itself are stored in [`licenses`](licenses).
 
+Dependabot updates of components built into Synopio are not entered in the changelog one by one, but collected in the section of the next version, in English and German, e.g. `Updated third-party components: PdfPig 0.1.16.` `scripts/DependencyUpdates.ps1` lists them since the last release and suggests the entry; updates of the test project are skipped. The release workflow fails if one of them is missing from the section of the new version.
+
 The folder [`testdata`](testdata) contains fictional test documents in all supported formats, which the tests use and which are suitable for trying out Synopio. The screenshots show the two PDF versions from there.
 
 The icons in [`assets/icons`](assets/icons) (ICO and PNG in all common sizes) are generated from `icon.svg` with [`render-icons.mjs`](https://github.com/TripleT3005/TripleT3005/blob/main/scripts/render-icons.mjs), which needs Node.js and Edge or Chrome: `node render-icons.mjs assets/icons`.
@@ -246,6 +248,8 @@ Die Projektmappe besteht aus drei Projekten:
 Die Version steht einmalig in [`Directory.Build.props`](Directory.Build.props). Ein Release entsteht automatisch, sobald eine neue Version auf `main` landet. Jede Version braucht in [CHANGELOG.md](CHANGELOG.md) einen Abschnitt mit englischen und deutschen Notizen, der zu den Release-Notizen wird; ohne ihn schlagen Tests und Pipeline fehl.
 
 `scripts/ThirdPartyLicenses.ps1` sammelt die Lizenzen aller Fremdkomponenten in `THIRD-PARTY-LICENSES.txt` für die Release-Pakete und schlägt fehl, wenn eine Komponente eine Lizenz nutzt, die nicht auf der erlaubten Liste steht. Lizenztexte, die ein Paket nicht selbst enthält, liegen in [`licenses`](licenses).
+
+Dependabot-Updates von Komponenten, die in Synopio eingebaut sind, kommen nicht einzeln in den Changelog, sondern gesammelt in den Abschnitt der nächsten Version, auf Englisch und Deutsch, z. B. `Fremdkomponenten aktualisiert: PdfPig 0.1.16.` `scripts/DependencyUpdates.ps1` listet sie seit dem letzten Release auf und schlägt den Eintrag vor; Updates des Testprojekts fallen weg. Der Release-Workflow schlägt fehl, wenn eines davon im Abschnitt der neuen Version fehlt.
 
 Der Ordner [`testdata`](testdata) enthält erfundene Testdokumente in allen unterstützten Formaten, die die Tests nutzen und die sich zum Ausprobieren von Synopio eignen. Die Screenshots zeigen die beiden PDF-Fassungen von dort.
 
